@@ -1,0 +1,115 @@
+package io.example.library.Controller;
+
+
+import io.example.library.Dao.LibroDao;
+import io.example.library.Dao.UserDao;
+import io.example.library.Dao.UtenteLibroDao;
+import io.example.library.Model.Libro;
+import io.example.library.Model.User;
+import io.example.library.Model.UserLibro;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Controller
+public class LibroController {
+
+    @Autowired
+    private LibroDao libroRepository;
+    @Autowired
+    private UserDao utenteRepository;
+
+    @Autowired
+    private UtenteLibroDao utenteLibroDao;
+
+    @GetMapping(value = "controlPanel")
+    public String controlPanel(HttpSession session){
+        if (session.getAttribute("loggedUser") == null) return "redirect:/login";
+        return "controlPanel";
+    }
+
+
+    @GetMapping(value = "/addBook")
+    public String addBookPage(Libro book, HttpSession session) {;
+        if (session.getAttribute("loggedUser") == null) return "redirect:/login";
+
+        return "addBook";
+    }
+
+    @PostMapping(value = "/addBookAction")
+    public String addBookAction(@Valid Libro book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return "addBook";
+
+        for(Libro b : libroRepository.findAll()){
+            if(Objects.equals(b.getTitolo().toLowerCase(), book.getTitolo().toLowerCase()) &&
+                    b.getAutore().toLowerCase().equals(book.getAutore().toLowerCase()))
+                return "redirect:/bookInfo";
+        }
+
+        libroRepository.save(book);
+
+        return "redirect:/controlPanel";
+    }
+
+
+    @GetMapping(value = "/bookInfo")
+    public String bookInfo(Model model,HttpSession session) {
+        if (session.getAttribute("loggedUser") == null) return "redirect:/login";
+
+        model.addAttribute("books", libroRepository.findAll());
+        return "bookInfo";
+    }
+
+    @GetMapping(value = "/yourBooks")
+    public String yourBooks(HttpSession session, Model model){
+        if (session.getAttribute("loggedUser") == null) return "redirect:/login";
+
+        User loggedUser = (User) session.getAttribute("loggedUser");
+        Optional<User> u = utenteRepository.findById(loggedUser.getId());
+
+        List<Libro> userBooks = new ArrayList<>();
+        for (UserLibro b :  u.get().getUserBooks()){
+            userBooks.add(b.getLibro());
+        }
+
+        model.addAttribute("books", userBooks);
+
+        return "yourBooks";
+    }
+
+    @GetMapping(value="/addFavouriteBook")
+    public String addFavouriteBook(HttpSession session, @RequestParam("favourite_book_id") long id){
+        User loggedUser = (User) session.getAttribute("loggedUser");
+
+        for (UserLibro userLibro : loggedUser.getUserBooks()){
+            if(userLibro.getLibro().getId() == id) return "redirect:/yourBooks";
+        }
+
+        Libro book = libroRepository.findById(id);
+        UserLibro userLibro = new UserLibro(loggedUser,book);
+        utenteLibroDao.save(userLibro);
+        return "redirect:/yourBooks";
+    }
+
+    @GetMapping(value = "/removeFromFavourites")
+    public String removeFromFavourites(HttpSession session, @RequestParam("favourite_book_id") long id){
+        User loggedUser = (User) session.getAttribute("loggedUser");
+
+        for(UserLibro userLibro : utenteLibroDao.findByUserId(loggedUser.getId())){
+            if(userLibro.getLibro().getId() == id) utenteLibroDao.deleteById(userLibro.getId());
+        }
+
+        return "redirect:/yourBooks";
+    }
+
+}
