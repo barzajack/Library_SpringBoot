@@ -6,6 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserDao extends CrudRepository<User, Long> {
     User findById(long id);
-    @Query("select s from  User s where username= :username and password= :passowrd")
+
+    @Query("select s from User s where username= :username and password= :password")
     public User login(String username, String password);
+
+//    @Query("select s from  User s where username= :username and password= :passowrd")
+//    public User login(String username, String password);
+
 }

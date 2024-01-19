@@ -66,14 +66,14 @@
     </div>
 
     <p>FirstName</p>
-    <input type="text" th:field="*{firstName}"/>
-    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">deve essere tra le 3 e i 10</p>
+    <input type="text" th:field="*{nome}"/>
+    <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">deve essere tra le 3 e i 10</p>
 
     <br/>
 
     <p>LastName</p>
-    <input type="text" th:field="*{lastName}"/>
-    <p th:if="${#fields.hasErrors('lastName')}" errors="*{lastName}">deve essere tra le 3 e i 10r</p>
+    <input type="text" th:field="*{cognome}"/>
+    <p th:if="${#fields.hasErrors('cognome')}" errors="*{cognome}">deve essere tra le 3 e i 10r</p>
     <br/>
 
     <p>User</p>
