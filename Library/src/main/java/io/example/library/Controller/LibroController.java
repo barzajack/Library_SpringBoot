@@ -26,6 +26,7 @@ public class LibroController {
 
     @Autowired
     private LibroDao libroRepository;
+
     @Autowired
     private UserDao utenteRepository;
 
@@ -40,23 +41,23 @@ public class LibroController {
 
 
     @GetMapping(value = "/addBook")
-    public String addBookPage(Libro book, HttpSession session) {;
+    public String addBookPage(Libro libro, HttpSession session) {;
         if (session.getAttribute("loggedUser") == null) return "redirect:/login";
 
         return "addBook";
     }
 
     @PostMapping(value = "/addBookAction")
-    public String addBookAction(@Valid Libro book, BindingResult bindingResult) {
+    public String addBookAction(@Valid Libro libro, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "addBook";
 
         for(Libro b : libroRepository.findAll()){
-            if(Objects.equals(b.getTitolo().toLowerCase(), book.getTitolo().toLowerCase()) &&
-                    b.getAutore().toLowerCase().equals(book.getAutore().toLowerCase()))
+            if(Objects.equals(b.getTitolo().toLowerCase(), libro.getTitolo().toLowerCase()) &&
+                    b.getAutore().toLowerCase().equals(libro.getAutore().toLowerCase()))
                 return "redirect:/bookInfo";
         }
 
-        libroRepository.save(book);
+        libroRepository.save(libro);
 
         return "redirect:/controlPanel";
     }

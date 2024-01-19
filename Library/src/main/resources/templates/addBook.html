@@ -58,22 +58,22 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/addBookAction}" th:object="${book}" method="post">
+<form action="#" th:action="@{/addBookAction}" th:object="${libro}" method="post">
     <p>Author</p>
-    <input type="text" th:field="*{author}"/>
-    <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}">deve essere tra le 3 e i 10</p>
+    <input type="text" th:field="*{autore}"/>
+    <p th:if="${#fields.hasErrors('autore')}" th:errors="*{autore}">deve essere tra le 3 e i 10</p>
 
     <br/>
 
     <p>Title</p>
-    <input type="text" th:field="*{title}"/>
-    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">deve essere tra le 3 e i 10</p>
+    <input type="text" th:field="*{titolo}"/>
+    <p th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}">deve essere tra le 3 e i 10</p>
 
     <br/>
 
     <p>Pubblication year (dd/mm/yyyy)</p>
-    <input type="text" th:field="*{pubblicationYear}"/>
-    <p th:if="${#fields.hasErrors('pubblicationYear')}" th:errors="*{pubblicationYear}">deve essere tra le 3 e i 10</p>
+    <input type="text" th:field="*{annoPubblicazione}"/>
+    <p th:if="${#fields.hasErrors('annoPubblicazione')}" th:errors="*{annoPubblicazione}">deve essere tra le 3 e i 10</p>
 
     <br/>
 

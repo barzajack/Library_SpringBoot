@@ -73,10 +73,10 @@
     </thead>
     <tbody>
     <tr th:each="book : ${books}">
-        <td><span th:text="${book.title}"> Title </span></td>
-        <td><span th:text="${book.author}"> Author </span></td>
+        <td><span th:text="${book.titolo}"> Title </span></td>
+        <td><span th:text="${book.autore}"> Author </span></td>
         <td><span th:text="${book.price}"> Author </span></td>
-        <td><span th:text="${book.pubblicationYear}"> Author </span></td>
+        <td><span th:text="${book.annoPubblicazione}"> Author </span></td>
         <td><a th:href="@{/removeFromFavourites(favourite_book_id = ${book.id})}"><button>Remove</button></a></td>
     </tr>
     </tbody>

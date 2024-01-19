@@ -19,6 +19,7 @@ public class UserController {
     @Autowired
     private UserDao userRepository;
 
+
     @GetMapping(value = "/")
     public String signIn(User user) {
         return "signIn";
@@ -51,7 +52,7 @@ public class UserController {
                                 @RequestParam("password") String password,
                                 HttpSession session) {
 
-        User loggedUser = userRepository.login(username, password);
+       User loggedUser = userRepository.login(username, password);
         if (loggedUser == null) return "redirect:/login";
         session.setAttribute("loggedUser", loggedUser);
         return "controlPanel";
