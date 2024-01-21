@@ -1,85 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
 
-        form {
-            max-width: 300px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+            form {
+                max-width: 300px;
+                margin: 50px auto;
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
 
-        table {
-            width: 100%;
-        }
+            table {
+                width: 100%;
+            }
 
-        td {
-            padding: 10px;
-        }
+            td {
+                padding: 10px;
+            }
 
-        input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+            input {
+                width: 100%;
+                padding: 8px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
 
-        input[type="submit"] {
-            background-color: #4caf50;
-            color: white;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            padding: 10px;
-        }
+            input[type="submit"] {
+                background-color: #4caf50;
+                color: white;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                padding: 10px;
+            }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
 
-        p {
-            margin-top: 20px;
-        }
+            p {
+                margin-top: 20px;
+            }
 
-        a {
-            text-decoration: none;
-            color: #008CBA;
-        }
+            a {
+                text-decoration: none;
+                color: #008CBA;
+            }
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-<form action="signin" method="post" th:action="@{/validationLogin}">
-    <table>
-        <tr>
-            <td><input type="text" name="username"></input></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="password"></input></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="submit"></td>
-        </tr>
-    </table><br>
-    <p>Non hai l'account? <a href="/">Registrati</a></p>
-</form>
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+    <form action="signin" method="post" th:action="@{/validationLogin}">
+        <table>
+            <tr>
+                <td><input type="text" name="username"></input></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="password"></input></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="submit"></td>
+            </tr>
+        </table><br>
+        <p>Non hai l'account? <a href="/">Registrati</a></p>
+    </form>
 
-</body>
+    </body>
 </html>

@@ -56,14 +56,13 @@ public class UserController {
         if (loggedUser == null) return "redirect:/login";
         session.setAttribute("loggedUser", loggedUser);
         return "controlPanel";
-
     }
 
     @GetMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.setAttribute("loggedUser", null);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping(value = "/userInfo")
