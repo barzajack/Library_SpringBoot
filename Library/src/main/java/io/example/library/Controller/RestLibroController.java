@@ -20,33 +20,31 @@ public class RestLibroController {
     @Autowired
     private LibroDao bookRepository;
 
-
-
     @GetMapping("/jsonBooks")
-    public ArrayList<Libro> jsonBooks(){
+    public ArrayList<Libro> jsonBooks() {
         return (ArrayList<Libro>) bookRepository.findAll();
     }
 
     @GetMapping("/jsonBookByTitle")
-    public Libro jsonBook(@RequestParam(value = "title", defaultValue = "CG4L")String title){
-        return  bookRepository.findByTitolo(title);
+    public Libro jsonBook(@RequestParam(value = "title", defaultValue = "CG4L") String title) {
+        return bookRepository.findByTitolo(title);
     }
 
     @GetMapping("/synchronize")
-    public void googleBooks(){
+    public void googleBooks() {
         RestTemplate restTemplate = new RestTemplate();
-        String booksApi  = "https://www.googleapis.com/books/v1/volumes?q=\"\"&maxResults=40";
+        String booksApi = "https://www.googleapis.com/books/v1/volumes?q=\"\"&maxResults=40";
         Root root = restTemplate.getForObject(booksApi, Root.class);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-        for(Item item: root.items){
+        for (Item item : root.items) {
             Libro tempBook = new Libro(
-                    item.volumeInfo.authors.get(0), item.volumeInfo.title,
+                    item.volumeInfo.authors == null ? "no author" : item.volumeInfo.authors.get(0)
+                    , item.volumeInfo.title,
                     df.format(item.volumeInfo.publishedDate.getTime()),
                     item.saleInfo.listPrice == null ?
                             0 : item.saleInfo.listPrice.amount
             );
-            bookRepository.save(tempBook);
         }
     }
 }
