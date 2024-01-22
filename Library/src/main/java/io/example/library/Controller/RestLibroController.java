@@ -3,7 +3,7 @@ package io.example.library.Controller;
 import io.example.library.Dao.LibroDao;
 import io.example.library.Model.Libro;
 import io.example.library.Model.LibroAPI.Item;
-import jakarta.persistence.criteria.Root;
+import io.example.library.Model.LibroAPI.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +31,7 @@ public class RestLibroController {
     public Libro jsonBook(@RequestParam(value = "title", defaultValue = "CG4L")String title){
         return  bookRepository.findByTitolo(title);
     }
-/*
+
     @GetMapping("/synchronize")
     public void googleBooks(){
         RestTemplate restTemplate = new RestTemplate();
@@ -40,7 +40,8 @@ public class RestLibroController {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         for(Item item: root.items){
-            Libro tempBook = new Libro(item.volumeInfo.authors.get(0), item.volumeInfo.title,
+            Libro tempBook = new Libro(
+                    item.volumeInfo.authors.get(0), item.volumeInfo.title,
                     df.format(item.volumeInfo.publishedDate.getTime()),
                     item.saleInfo.listPrice == null ?
                             0 : item.saleInfo.listPrice.amount
@@ -48,6 +49,4 @@ public class RestLibroController {
             bookRepository.save(tempBook);
         }
     }
-
- */
 }
